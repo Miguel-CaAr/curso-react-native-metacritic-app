@@ -4,6 +4,7 @@ import { getLatestGames } from "../lib/metacritic";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AnimatedGameCard } from "./GameCard";
 import { Logo } from "../components/Logo";
+import { Link } from 'expo-router';
 
 export function Main() {
   const [games, setGames] = useState([]);
@@ -27,6 +28,9 @@ export function Main() {
       <View style={{ marginBottom: 10 }}>
         <Logo />
       </View>
+      <Link className='text-white pl-5' href='/about'>
+        Acerca de
+      </Link>
       {
         games.length === 0
           ?
