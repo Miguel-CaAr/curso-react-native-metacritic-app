@@ -1,10 +1,12 @@
-import { StyleSheet, View, FlatList, ActivityIndicator } from "react-native";
+import { StyleSheet, Pressable, View, FlatList, ActivityIndicator } from "react-native";
 import { useState, useEffect } from "react";
 import { getLatestGames } from "../lib/metacritic";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AnimatedGameCard } from "./GameCard";
 import { Logo } from "../components/Logo";
 import { Link } from 'expo-router';
+import { CircleInfoIcon } from "../components/Icons"
+import { Screen } from "../components/Screen"
 
 export function Main() {
   const [games, setGames] = useState([]);
@@ -17,33 +19,29 @@ export function Main() {
   }, []);
 
   return (
-    <View style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}>
-      {/* 
+    <Screen>
+      <View>
+        {/* 
     'ScrollView': No es el optimo en este caso, renderiza todo y 
     cuando hay contenido dinamico puede llegar a ser lento.
     'SafeAreaView': Este es optimo pero solo funciona en IOS.\
     'FlatList': Es el mejor y con mas caracteristicas (Este no envuelve
       elementos, sino que recibe props).
     */}
-      <View style={{ marginBottom: 10 }}>
-        <Logo />
-      </View>
-      <Link className='text-white pl-5' href='/about'>
-        Acerca de
-      </Link>
-      {
-        games.length === 0
-          ?
-          < ActivityIndicator size={100} color="green" />
-          :
-          < FlatList
+        {
+          games.length === 0
+            ?
+            < ActivityIndicator size={100} color="green" />
+            :
+            < FlatList
 
-            data={games}
-            keyExtractor={(game) => game.slug}
-            renderItem={({ item, index }) => <AnimatedGameCard game={item} index={index} />}
-          />
-      }
-    </ View>
+              data={games}
+              keyExtractor={(game) => game.slug}
+              renderItem={({ item, index }) => <AnimatedGameCard game={item} index={index} />}
+            />
+        }
+      </ View>
+    </Screen>
   )
 };
 
